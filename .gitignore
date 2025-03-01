@@ -1,0 +1,32 @@
+# Каталоги сборки
+/cmake-build-debug/
+/cmake-build-release/
+/build/
+
+# Пользовательские файлы CLion
+.idea/
+*.iml
+*.iws
+*.ipr
+*.xml
+
+# Объектные файлы и бинарники
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Qt-специфичные файлы
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+*.qm
+*.user
+*.user.*
+
+# Временные файлы
+*~
+*.autosave
+*.bak
