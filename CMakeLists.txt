@@ -1,45 +1,35 @@
 cmake_minimum_required(VERSION 3.16)
-project(FileManager VERSION 0.1 LANGUAGES CXX)
+project(FileManager VERSION 0.1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_AUTOMOC ON)  # Для автоматической обработки Q_OBJECT
-set(CMAKE_AUTORCC ON)  # Для ресурсов Qt
-set(CMAKE_AUTOUIC ON)  # Для .ui файлов
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
 
-# Найти Qt пакеты
-find_package(Qt6 COMPONENTS Widgets REQUIRED)
-# Если используете Qt5, замените на:
-# find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt6 COMPONENTS Core Quick QuickControls2 Qml REQUIRED)
 
-# Исходные файлы
-set(SOURCE_FILES
+set(SOURCES
         src/main.cpp
-        src/ui/windows/MainWindow.cpp
+        src/ui/models/FileSystemModel.cpp
 )
 
-# Заголовочные файлы
-set(HEADER_FILES
-        src/ui/windows/MainWindow.h
+set(HEADERS
+        src/ui/models/FileSystemModel.h
 )
 
-# UI файлы (если будете использовать Qt Designer)
-set(UI_FILES
-        #src$/ui/windows/MainWindow.ui  # Раскомментируйте, если создадите UI файл
+qt_add_resources(RESOURCES
+        qml.qrc
 )
 
-# Создание исполняемого файла
-add_executable(${PROJECT_NAME}
-        ${SOURCE_FILES}
-        ${HEADER_FILES}
-)
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} ${RESOURCES})
 
-# Связывание с библиотеками Qt
+# Add QML import path for development
+set(QML_IMPORT_PATH ${CMAKE_SOURCE_DIR}/qml CACHE STRING "Qt Creator QML Module Path")
+
 target_link_libraries(${PROJECT_NAME} PRIVATE
-        Qt6::Widgets  # Если Qt5: Qt5::Widgets
-)
-
-# Включить каталоги для поиска заголовочных файлов
-target_include_directories(${PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
+        Qt6::Core
+        Qt6::Quick
+        Qt6::QuickControls2
+        Qt6::Qml
 )
